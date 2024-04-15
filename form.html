@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+</head>
+
+<body>
+    <form id="myForm">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" , id="name" name="name">
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="text" , id="email" name="email">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="text" , id="password" name="password">
+        </div>
+        <div>
+            <label for="subscribe">Subscribe:</label>
+            <input type="checkbox" , id="subscribe" name="subscribe">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        document.getElementById('myForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const formValues = {};
+
+            formData.forEach((v, k) => {
+                formValues[k] = v;
+            });
+            console.log(JSON.stringify(formValues));
+            // Calling Third party API , fetching the response and console it..
+            // fetch is the method provided in HTML to call third party api's....
+            fetch('http://localhost:3001/getJSON', { method: 'POST',headers: {
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify(formValues) })
+            .then(response =>{
+                return response.json();
+            }).then(data=>{
+                console.log(data)
+            })
+        });
+
+
+    </script>
+</body>
+
+</html>
